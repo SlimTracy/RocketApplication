@@ -15,6 +15,7 @@ const main = async () => {
       <img src="${launch.rocketImage}" alt="${launch.rocketName}">
       <p>Window Start: ${launch.windowStart}</p>
       <p>Window End: ${launch.windowEnd}</p>
+      <p>${launch.description}</p>
     `;
     rocketLaunchesDiv.appendChild(launchDiv);
   }
@@ -39,7 +40,8 @@ const getRocketLaunchArray = async (data) => {
     const rocketImage = launch.image;
     const windowStart = launch.window_start;
     const windowEnd = launch.window_end;
-    rocketLaunchArray.push({ rocketId, rocketName, rocketImage, windowStart, windowEnd });
+    const description = launch.mission.description;
+    rocketLaunchArray.push({ rocketId, rocketName, rocketImage, windowStart, windowEnd, description });
   }
 
   return rocketLaunchArray;
