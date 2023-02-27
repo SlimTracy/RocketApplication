@@ -5,9 +5,18 @@ const main = async () => {
 
   const rocketLaunchArray = await getRocketLaunchArray(data);
 
+  const rocketLaunchesDiv = document.querySelector('#rocketLaunches');
+
   for (const launch of rocketLaunchArray) {
-    displayLaunch(launch.rocketName, launch.windowStart, launch.windowEnd);
-    console.log(launch.rocketName)
+    const launchDiv = document.createElement('div');
+    launchDiv.classList.add('launch'); // Add class to launchDiv
+    launchDiv.innerHTML = `
+      <h2>${launch.rocketName}</h2>
+      <img src="${launch.rocketImage}" alt="${launch.rocketName}">
+      <p>Window Start: ${launch.windowStart}</p>
+      <p>Window End: ${launch.windowEnd}</p>
+    `;
+    rocketLaunchesDiv.appendChild(launchDiv);
   }
 }
 
@@ -35,15 +44,5 @@ const getRocketLaunchArray = async (data) => {
 
   return rocketLaunchArray;
 };
-
-const displayLaunch = async (rocketName, windowStart, windowEnd) => {
-  let name = document.querySelector('#RocketName');
-  let start = document.querySelector('#WindowStart');
-  let end = document.querySelector('#WindowEnd');
-
-  name.textContent = rocketName;
-  start.textContent = windowStart;
-  end.textContent = windowEnd;
-}
 
 main();
