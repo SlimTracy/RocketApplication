@@ -31,6 +31,41 @@ const fetchData = async () => {
   }
 }
 
+
+
+const fetchWeather = async () => {
+  try {
+    const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=28.41&longitude=-80.60&timezone=auto&hourly=temperature_2m,dewpoint_2m,precipitation');
+    const data = await response.json();
+
+    console.log("This is weather data below");
+    console.log(data);
+    
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+fetchWeather();
+
+
+// Now we can see if the launch data has precipatation that day. 
+
+// If we have weather data for the launch data put that in the ui.
+
+// If we don't have weather data for the launch date, we can go ahead and show an icon tha says no weather data at this time.
+
+
+
+
+
+
+
+
+
+
+
 const getRocketLaunchArray = async (data) => {
   const rocketLaunchArray = [];
 
