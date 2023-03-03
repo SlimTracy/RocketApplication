@@ -54,8 +54,6 @@ const fetchWeather = async (latitude, longitude, windowStart) => {
 }
 
 
-
-
 const getRocketLaunchArray = async (data) => {
   const rocketLaunchArray = [];
 
@@ -63,15 +61,32 @@ const getRocketLaunchArray = async (data) => {
     const rocketId = launch.id;
     const rocketName = launch.name;
     const rocketImage = launch.image;
-    const windowStart = launch.window_start;
-    const windowEnd = launch.window_end;
+    const windowStartUTC = launch.window_start;
+    const windowEndUTC = launch.window_end;
+
+    // Convert the UTC date to the local date and time format without seconds
+    const options = { hour: 'numeric', minute: 'numeric', hour12: true };
+    const windowStart = new Intl.DateTimeFormat('en-US', options).format(new Date(windowStartUTC));
+    const windowEnd = new Intl.DateTimeFormat('en-US', options).format(new Date(windowEndUTC));
+
     const description = launch.mission.description;
     const latitude = launch.pad.latitude;
     const longitude = launch.pad.longitude;
-    rocketLaunchArray.push({ rocketId, rocketName, rocketImage, windowStart, windowEnd, description, latitude, longitude });
+
+    rocketLaunchArray.push({
+      rocketId,
+      rocketName,
+      rocketImage,
+      windowStart,
+      windowEnd,
+      description,
+      latitude,
+      longitude
+    });
   }
 
   return rocketLaunchArray;
 };
+
 
 main();
