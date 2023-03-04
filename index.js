@@ -32,6 +32,7 @@ const fetchData = async () => {
   try {
     const response = await fetch('https://lldev.thespacedevs.com/2.2.0/launch/upcoming/');
     const data = await response.json();
+    
     return data;
   } catch (error) {
     throw error;
@@ -53,7 +54,6 @@ const fetchWeather = async (latitude, longitude, windowStart) => {
   }
 }
 
-
 const getRocketLaunchArray = async (data) => {
   const rocketLaunchArray = [];
 
@@ -65,7 +65,7 @@ const getRocketLaunchArray = async (data) => {
     const windowEndUTC = launch.window_end;
 
     // Convert the UTC date to the local date and time format without seconds
-    const options = { hour: 'numeric', minute: 'numeric', hour12: true };
+    const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
     const windowStart = new Intl.DateTimeFormat('en-US', options).format(new Date(windowStartUTC));
     const windowEnd = new Intl.DateTimeFormat('en-US', options).format(new Date(windowEndUTC));
 
@@ -88,5 +88,5 @@ const getRocketLaunchArray = async (data) => {
   return rocketLaunchArray;
 };
 
-
 main();
+
