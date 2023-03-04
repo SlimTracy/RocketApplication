@@ -30,8 +30,9 @@ const main = async () => {
 
 const fetchData = async () => {
   try {
-    const response = await fetch('https://ll.thespacedevs.com/2.2.0/launch/upcoming/');
+    const response = await fetch('https://lldev.thespacedevs.com/2.2.0/launch/upcoming/');
     const data = await response.json();
+    
     return data;
   } catch (error) {
     throw error;
@@ -53,9 +54,6 @@ const fetchWeather = async (latitude, longitude, windowStart) => {
   }
 }
 
-
-
-
 const getRocketLaunchArray = async (data) => {
   const rocketLaunchArray = [];
 
@@ -63,15 +61,32 @@ const getRocketLaunchArray = async (data) => {
     const rocketId = launch.id;
     const rocketName = launch.name;
     const rocketImage = launch.image;
-    const windowStart = launch.window_start;
-    const windowEnd = launch.window_end;
+    const windowStartUTC = launch.window_start;
+    const windowEndUTC = launch.window_end;
+
+    // Convert the UTC date to the local date and time format without seconds
+    const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
+    const windowStart = new Intl.DateTimeFormat('en-US', options).format(new Date(windowStartUTC));
+    const windowEnd = new Intl.DateTimeFormat('en-US', options).format(new Date(windowEndUTC));
+
     const description = launch.mission.description;
     const latitude = launch.pad.latitude;
     const longitude = launch.pad.longitude;
-    rocketLaunchArray.push({ rocketId, rocketName, rocketImage, windowStart, windowEnd, description, latitude, longitude });
+
+    rocketLaunchArray.push({
+      rocketId,
+      rocketName,
+      rocketImage,
+      windowStart,
+      windowEnd,
+      description,
+      latitude,
+      longitude
+    });
   }
 
   return rocketLaunchArray;
 };
+
 
 main();
