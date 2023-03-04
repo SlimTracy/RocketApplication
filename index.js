@@ -88,5 +88,5 @@ const getRocketLaunchArray = async (data) => {
   return rocketLaunchArray;
 };
 
-
 main();
+
